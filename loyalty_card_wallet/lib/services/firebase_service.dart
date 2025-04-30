@@ -9,14 +9,14 @@ class FirebaseService {
 
   Future<void> syncCards(List<LoyaltyCard> cards) async {
     final batch = _firestore.batch();
-
+    
     for (var card in cards) {
       final docRef = _firestore
           .collection('users')
           .doc(userId)
           .collection('cards')
           .doc(card.id);
-
+          
       batch.set(docRef, card.toJson(), SetOptions(merge: true));
     }
 
@@ -29,8 +29,10 @@ class FirebaseService {
         .doc(userId)
         .collection('cards')
         .snapshots()
-        .map((snapshot) => snapshot.docs
-            .map((doc) => LoyaltyCard.fromJson(doc.data()))
-            .toList());
+        .map((snapshot) {
+          return snapshot.docs
+              .map((doc) => LoyaltyCard.fromJson(doc.data()))
+              .toList();
+        });
   }
 }

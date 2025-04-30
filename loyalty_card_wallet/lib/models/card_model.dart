@@ -1,29 +1,12 @@
-import 'package:hive/hive.dart';
 import 'package:uuid/uuid.dart';
 
-part 'card_model.g.dart';
-
-@HiveType(typeId: 0)
-class LoyaltyCard extends HiveObject {
-  @HiveField(0)
+class LoyaltyCard {
   final String id;
-
-  @HiveField(1)
   String title;
-
-  @HiveField(2)
   String barcodeData;
-
-  @HiveField(3)
   DateTime? expirationDate;
-
-  @HiveField(4)
   String notes;
-
-  @HiveField(5)
   bool isSynced;
-
-  @HiveField(6)
   DateTime lastModified;
 
   LoyaltyCard({
@@ -43,6 +26,7 @@ class LoyaltyCard extends HiveObject {
         'expirationDate': expirationDate?.toIso8601String(),
         'notes': notes,
         'lastModified': lastModified.toIso8601String(),
+        'isSynced': isSynced,
       };
 
   factory LoyaltyCard.fromJson(Map<String, dynamic> json) => LoyaltyCard(
@@ -53,5 +37,12 @@ class LoyaltyCard extends HiveObject {
             ? DateTime.parse(json['expirationDate'])
             : null,
         notes: json['notes'] ?? '',
+        isSynced: json['isSynced'] ?? false,
       );
+
+  // Add method to handle manual barcode input
+  void updateBarcodeData(String data) {
+    barcodeData = data;
+    lastModified = DateTime.now();
+  }
 }

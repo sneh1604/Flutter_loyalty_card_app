@@ -6,23 +6,26 @@ plugins {
 }
 
 android {
-    namespace = "com.example.external_exam"
-    compileSdk = flutter.compileSdkVersion
-    ndkVersion = flutter.ndkVersion
+    namespace "com.example.loyalty_card_wallet"
+    compileSdkVersion flutter.compileSdkVersion
+
+    defaultConfig {
+        applicationId "com.example.loyalty_card_wallet"
+        minSdkVersion 21 
+        targetSdkVersion flutter.compileSdkVersion
+        versionCode 1
+        versionName "1.0.0"
+        multiDexEnabled true
+    }
 
     compileOptions {
-        sourceCompatibility = JavaVersion.VERSION_1_8
-        targetCompatibility = JavaVersion.VERSION_1_8
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+        coreLibraryDesugaringEnabled true
     }
 
     kotlinOptions {
-        jvmTarget = JavaVersion.VERSION_1_8
-    }
-
-    defaultConfig {
-        minSdkVersion 21
-        targetSdkVersion 33
-        multiDexEnabled true
+        jvmTarget = '1.8'
     }
     
     buildTypes {
@@ -34,6 +37,8 @@ android {
 }
 
 dependencies {
+    // Add desugaring dependency
+    coreLibraryDesugaring 'com.android.tools:desugar_jdk_libs:1.1.5'
     implementation platform('com.google.firebase:firebase-bom:32.7.0')
     implementation 'com.google.firebase:firebase-analytics'
     implementation 'com.android.support:multidex:1.0.3'
